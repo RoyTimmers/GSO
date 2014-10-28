@@ -9,12 +9,17 @@ package aex;
  *
  * @author Roy
  */
-public class MockEffectenbeurs {
+public class MockEffectenbeurs implements IEffectenbeurs{
     
     
     public void koersWisseling()
     {
         
+    }
+
+    @Override
+    public IFonds[] getKoersen() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

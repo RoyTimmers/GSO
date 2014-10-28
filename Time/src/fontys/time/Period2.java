@@ -10,20 +10,29 @@ package fontys.time;
  * @author Roy
  */
 public class Period2 implements IPeriod {
+    
+    Time beginTijd;
+    long duur;
 
+    public Period2(Time begintijd, long Duur)
+    {
+        beginTijd=begintijd;
+        duur=Duur;
+    }
     @Override
     public ITime getBeginTime() {
-        
+        return beginTijd;
     }
 
     @Override
     public ITime getEndTime() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Time eindTijd = (Time) beginTijd.plus((int)duur);
+        return eindTijd;
     }
 
     @Override
     public int length() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            
     }
 
     @Override

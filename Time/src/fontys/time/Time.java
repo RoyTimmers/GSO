@@ -19,6 +19,7 @@ public class Time implements ITime {
     int day;
     int hours;
     int minutes;
+    GregorianCalendar calendar;
     
     /**
     * creation of a Time-object with year y, month m, day d, hours h and
@@ -82,24 +83,40 @@ public class Time implements ITime {
 
     @Override
     public DayInWeek getDayInWeek() {
-        GregorianCalendar calendar = new GregorianCalendar(year,month,day,hours,minutes);
+        calendar = new GregorianCalendar(year,month,day,hours,minutes);
         int weekday = calendar.get(Calendar.DAY_OF_WEEK);
         return DayInWeek.values()[weekday];
     }
 
     @Override
     public ITime plus(int minutes) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Time plusMinutes = new Time(year, month, day, hours, minutes);
+        plusMinutes.calendar.add(GregorianCalendar.MINUTE, minutes);
+        return plusMinutes;
     }
 
     @Override
     public int difference(ITime time) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int y = time.getYear() - this.year;
+        int m = time.getMonth() - this.month +(y*12);
+        double d = time.getDay() - this.day+ (m*30.4368499 );
+        double h = time.getHours() - this.hours + (d*24);
+        double min = time.getMinutes() - this.minutes + (h * 60);
+        int dif = (int)(min+0.5);
+        return dif;
     }
 
     @Override
     public int compareTo(ITime t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (this.difference(t)> 0)
+        {
+            return 1;
+        }
+        if (this.difference(t)<0)
+        {
+            return -1;
+        }
+        return 0;
     }
     
 }

@@ -30,6 +30,7 @@ public class Fonds implements IFonds {
         return koers;
     }
     
-    public void 
-    
+    public void moveKoers(double delta) {
+        koers = koers + delta;
+    }
 }

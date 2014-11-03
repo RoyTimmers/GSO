@@ -5,26 +5,60 @@
  */
 package aex;
 
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
- * @author Roy
+ * @author Bart
  */
-public class AEXBanner extends javafx.application.Application{
+public class AEXBanner extends javafx.application.Application {
+
+    private FXMLController controller;
     
-    public AEXBanner()
-    {
-        
+    private IEffectenbeurs effectenbeurs;
+    private BannerController bannerController;
+    
+     /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
     }
     
-    public void setKoersen(String koersen)
-    {
-        
+    public AEXBanner() {
+        effectenbeurs = new MockEffectenbeurs();
+        bannerController = new BannerController(this, effectenbeurs);
+    }
+
+    public void setKoersen(String koersen) {
+        controller.bannerText.setText(koersen);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+        
+
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = loader.load(getClass().getResource("FXML.fxml").openStream());
+        controller = (FXMLController) loader.getController();
+        
+        Scene scene = new Scene(root);
+        
+        primaryStage.setTitle("AEX");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }

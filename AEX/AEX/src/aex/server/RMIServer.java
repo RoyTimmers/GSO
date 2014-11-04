@@ -35,15 +35,15 @@ public class RMIServer {
                 Naming.rebind(bindingName, e);
 
             } catch (MalformedURLException ex) {
-                System.out.println("Server: Cannot bind mock effectenbeurs");
+                System.out.println("Server: Cannot bind effectenbeurs");
                 System.out.println("Server: MalformedURLException: " + ex.getMessage());
             } catch (RemoteException ex) {
-                System.out.println("Server: Cannot bind mock effectenbeurs");
+                System.out.println("Server: Cannot bind effectenbeurs");
                 System.out.println("Server: RemoteException: " + ex.getMessage());
             }
-            System.out.println("Server: Mock effectenbeurs bound to " + bindingName);
+            System.out.println("Server: Effectenbeurs bound to " + bindingName);
         } else {
-            System.out.println("Server: Mock effectenbeurs not bound");
+            System.out.println("Server: Effectenbeurs not bound");
         }
     }
     

@@ -23,7 +23,6 @@ import javafx.stage.WindowEvent;
 public class AEXBanner extends javafx.application.Application {
 
     private FXMLController controller;
-    //private IEffectenbeurs effectenbeurs;
     private BannerController bannerController;
     
      /**
@@ -35,7 +34,6 @@ public class AEXBanner extends javafx.application.Application {
     }
     
     public AEXBanner() throws RemoteException {
-        //effectenbeurs = new MockEffectenbeurs();
         bannerController = new BannerController(this);
     }
 

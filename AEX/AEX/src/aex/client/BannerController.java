@@ -23,20 +23,20 @@ import java.util.logging.Logger;
  * @author Roy
  */
 public class BannerController {
-
+    
     AEXBanner banner;
     //IEffectenbeurs effectenbeurs;
     Timer pollingTimer;
     private RMIServer server;
-
+    
     public BannerController(AEXBanner b) {
         //temp var:
         banner = b;
         //effectenbeurs = e;
         Random rng = new Random();
-
+        
         pollingTimer = new Timer();
-
+        
         pollingTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -45,7 +45,7 @@ public class BannerController {
                     IFonds[] fondsen = null;
                     
                     try {
-                        Registry reg = LocateRegistry.getRegistry("localhost", 1099);
+                        Registry reg = LocateRegistry.getRegistry("srv1.staticvoid.nl", 1099);
                         IEffectenbeurs remoteBeurs = (IEffectenbeurs) reg.lookup("Effectenbeurs");
                         fondsen = remoteBeurs.getKoersen();
                     } catch (RemoteException exception) {
@@ -56,21 +56,25 @@ public class BannerController {
 
                     // IEffectenbeurs remoteBeurs = 
                     //IFonds[] fondsen = e.getKoersen();
-                    for (IFonds f : fondsen) {
-                        String koers = f.getKoers() + "";
-                        koers = koers.substring(0, 5);
-
-                        nieuweKoersen += f.getNaam() + " " + koers + "  ";
+                    if (fondsen == null) {
+                        b.setKoersen(" ");
+                    }else{
+                        for (IFonds f : fondsen) {
+                            String koers = f.getKoers() + "     ";
+                            koers = koers.substring(0, 5);
+                            
+                            nieuweKoersen += f.getNaam() + " " + koers + "  ";
+                        }
+                        
+                        b.setKoersen(nieuweKoersen);
                     }
-
-                    b.setKoersen(nieuweKoersen);
-
+                    
                 } catch (RemoteException ex) {
                     Logger.getLogger(BannerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }, 1000, 1000);
-
+        
     }
-
+    
 }

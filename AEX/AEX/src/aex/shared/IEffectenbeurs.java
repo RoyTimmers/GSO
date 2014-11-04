@@ -3,20 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aex;
+package aex.shared;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
 
 /**
  *
  * @author Roy
  */
-public interface IFonds extends Remote {
-    
-    String getNaam() throws RemoteException;
-    
-    double getKoers() throws RemoteException;
-    
+public interface IEffectenbeurs extends Remote {
+
+    public IFonds[] getKoersen() throws RemoteException;
 }

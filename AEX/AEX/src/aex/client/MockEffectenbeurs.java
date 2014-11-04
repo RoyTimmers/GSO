@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aex;
+package aex.client;
 
+import aex.shared.IFonds;
+import aex.shared.IEffectenbeurs;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Random;

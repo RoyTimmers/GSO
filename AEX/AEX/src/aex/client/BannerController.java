@@ -3,10 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aex;
+package aex.client;
 
+import aex.shared.IFonds;
+import aex.shared.IEffectenbeurs;
 import aex.server.RMIServer;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,14 +25,14 @@ import java.util.logging.Logger;
 public class BannerController {
 
     AEXBanner banner;
-    IEffectenbeurs effectenbeurs;
+    //IEffectenbeurs effectenbeurs;
     Timer pollingTimer;
     private RMIServer server;
 
-    public BannerController(AEXBanner b, IEffectenbeurs e) {
+    public BannerController(AEXBanner b) {
         //temp var:
         banner = b;
-        effectenbeurs = e;
+        //effectenbeurs = e;
         Random rng = new Random();
 
         pollingTimer = new Timer();
@@ -37,17 +42,29 @@ public class BannerController {
             public void run() {
                 try {
                     String nieuweKoersen = "";
+                    IFonds[] fondsen = null;
                     
-                    IFonds[] fondsen = e.getKoersen();
-                    
+                    try {
+                        Registry reg = LocateRegistry.getRegistry("localhost", 1099);
+                        IEffectenbeurs remoteBeurs = (IEffectenbeurs) reg.lookup("Effectenbeurs");
+                        fondsen = remoteBeurs.getKoersen();
+                    } catch (RemoteException exception) {
+                        System.err.println("Connection error");
+                    } catch (NotBoundException exception) {
+                        System.err.println("Not bound error");
+                    }
+
+                    // IEffectenbeurs remoteBeurs = 
+                    //IFonds[] fondsen = e.getKoersen();
                     for (IFonds f : fondsen) {
                         String koers = f.getKoers() + "";
                         koers = koers.substring(0, 5);
-                        
+
                         nieuweKoersen += f.getNaam() + " " + koers + "  ";
                     }
-                    
+
                     b.setKoersen(nieuweKoersen);
+
                 } catch (RemoteException ex) {
                     Logger.getLogger(BannerController.class.getName()).log(Level.SEVERE, null, ex);
                 }

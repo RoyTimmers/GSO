@@ -5,7 +5,7 @@
  */
 package aex.server;
 
-import aex.*;
+import aex.shared.IEffectenbeurs;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -24,7 +24,7 @@ public class RMIServer {
 
     private static final int portNumber = 1099;
 
-    private static final String bindingName = "MockEffectenbeurs";
+    private static final String bindingName = "Effectenbeurs";
 
     public RMIServer(IEffectenbeurs e) {
         System.out.println("Server: Port number " + portNumber);
@@ -79,7 +79,5 @@ public class RMIServer {
             System.out.println("Server: UnknownHostException: " + ex.getMessage());
         }
     }
-    
-    
 
 }

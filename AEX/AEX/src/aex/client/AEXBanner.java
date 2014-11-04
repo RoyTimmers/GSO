@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aex;
+package aex.client;
 
+import aex.shared.IEffectenbeurs;
 import aex.server.RMIServer;
 import java.rmi.RemoteException;
 import javafx.application.Platform;
@@ -22,7 +23,7 @@ import javafx.stage.WindowEvent;
 public class AEXBanner extends javafx.application.Application {
 
     private FXMLController controller;
-    private IEffectenbeurs effectenbeurs;
+    //private IEffectenbeurs effectenbeurs;
     private BannerController bannerController;
     
      /**
@@ -34,8 +35,8 @@ public class AEXBanner extends javafx.application.Application {
     }
     
     public AEXBanner() throws RemoteException {
-        effectenbeurs = new MockEffectenbeurs();
-        bannerController = new BannerController(this, effectenbeurs);
+        //effectenbeurs = new MockEffectenbeurs();
+        bannerController = new BannerController(this);
     }
 
     public void setKoersen(String koersen) {

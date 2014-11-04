@@ -5,14 +5,18 @@
  */
 package aex;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+
 /**
  *
  * @author Roy
  */
-public interface IFonds {
+public interface IFonds extends Remote {
     
-    String getNaam();
+    String getNaam() throws RemoteException;
     
-    double getKoers();
+    double getKoers() throws RemoteException;
     
 }

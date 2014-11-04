@@ -5,11 +5,14 @@
  */
 package aex;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  *
  * @author Roy
  */
-public interface IEffectenbeurs {
-    
-    public IFonds[] getKoersen();
+public interface IEffectenbeurs extends Remote {
+
+    public IFonds[] getKoersen() throws RemoteException;
 }

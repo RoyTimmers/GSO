@@ -5,6 +5,8 @@
  */
 package aex;
 
+import aex.server.RMIServer;
+import java.rmi.RemoteException;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +22,6 @@ import javafx.stage.WindowEvent;
 public class AEXBanner extends javafx.application.Application {
 
     private FXMLController controller;
-    
     private IEffectenbeurs effectenbeurs;
     private BannerController bannerController;
     
@@ -29,9 +30,10 @@ public class AEXBanner extends javafx.application.Application {
      */
     public static void main(String[] args) {
         launch(args);
+        
     }
     
-    public AEXBanner() {
+    public AEXBanner() throws RemoteException {
         effectenbeurs = new MockEffectenbeurs();
         bannerController = new BannerController(this, effectenbeurs);
     }

@@ -5,11 +5,13 @@
  */
 package aex;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Roy
  */
-public class Fonds implements IFonds {
+public class Fonds implements IFonds, Serializable {
     
     String naam;
     double koers;

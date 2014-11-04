@@ -5,9 +5,13 @@
  */
 package aex;
 
+import aex.server.RMIServer;
+import java.rmi.RemoteException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +22,7 @@ public class BannerController {
     AEXBanner banner;
     IEffectenbeurs effectenbeurs;
     Timer pollingTimer;
+    private RMIServer server;
 
     public BannerController(AEXBanner b, IEffectenbeurs e) {
         //temp var:
@@ -30,18 +35,22 @@ public class BannerController {
         pollingTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                String nieuweKoersen = "";
-
-                IFonds[] fondsen = e.getKoersen();
-
-                for (IFonds f : fondsen) {
-                    String koers = f.getKoers() + "";
-                    koers = koers.substring(0, 5);
+                try {
+                    String nieuweKoersen = "";
                     
-                    nieuweKoersen += f.getNaam() + " " + koers + "  ";
+                    IFonds[] fondsen = e.getKoersen();
+                    
+                    for (IFonds f : fondsen) {
+                        String koers = f.getKoers() + "";
+                        koers = koers.substring(0, 5);
+                        
+                        nieuweKoersen += f.getNaam() + " " + koers + "  ";
+                    }
+                    
+                    b.setKoersen(nieuweKoersen);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(BannerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                b.setKoersen(nieuweKoersen);
             }
         }, 1000, 1000);
 
